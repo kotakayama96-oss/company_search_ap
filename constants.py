@@ -45,6 +45,10 @@ TEMPERATURE = 0.5
 
 # ==========================================
 # RAG参照用のデータソース系
+# RAG関連パラメータ
+RAG_CHUNK_SIZE = 500
+RAG_CHUNK_OVERLAP = 50
+RAG_NUM_RETRIEVE_DOCS = 5
 # ==========================================
 RAG_TOP_FOLDER_PATH = "./data"
 SUPPORTED_EXTENSIONS = {

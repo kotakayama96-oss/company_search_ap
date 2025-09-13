@@ -70,12 +70,10 @@ with st.sidebar:
         label_visibility="collapsed"
     )
 
-    # ラジオボタン下に区切り線と余白を追加
     st.markdown("""
         <hr style='border: none; border-top: 2px solid #e0e0e0; margin: 24px 0 24px 0;'>
     """, unsafe_allow_html=True)
 
-    # 選択肢に関わらず常時説明文を表示
     st.markdown(
         """
         <style>
@@ -136,7 +134,6 @@ right_col = st.container()
 with right_col:
     cn.display_app_title()
     cn.display_initial_ai_message()
-    # ※説明文・入力例はサイドバー常時表示のため、メインビューからは削除
 
 
 ############################################################
@@ -157,7 +154,6 @@ with right_col:
 ############################################################
 # 6. チャット入力の受け付け
 ############################################################
-    # チャット入力欄をページ最下部に寄せるための余白
     st.markdown("<div style='height: 300px;'></div>", unsafe_allow_html=True)
     chat_message = st.chat_input(ct.CHAT_INPUT_HELPER_TEXT)
 

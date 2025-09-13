@@ -40,7 +40,6 @@ def display_initial_ai_message():
     """
     AIメッセージの初期表示
     """
-    # カスタムCSSでAI初期メッセージの背景色を薄い緑に変更
     st.markdown(
         """
         <style>
@@ -61,7 +60,6 @@ def display_initial_ai_message():
             '<div class="custom-ai-message">こんにちは。私は社内文書の情報をもとに回答する生成AIチャットボットです。サイドバーで利用目的を選択し、画面下部のチャット欄からメッセージを送信してください。</div>',
             unsafe_allow_html=True
         )
-        # 注意メッセージ用のカスタムCSS
         st.markdown(
             """
             <style>
@@ -113,7 +111,7 @@ def display_conversation_log():
 
                         # 参照元のありかに応じて、適したアイコンを取得
                         icon = utils.get_source_icon(message['content']['main_file_path'])
-                        # 参照元ドキュメントのページ番号が取得できた場合にのみ、ページ番号を表示
+                        # ページ番号を表示
                         if "main_page_number" in message["content"]:
                             st.success(f"{message['content']['main_file_path']}", icon=icon)
                         else:
@@ -130,7 +128,7 @@ def display_conversation_log():
                             for sub_choice in message["content"]["sub_choices"]:
                                 # 参照元のありかに応じて、適したアイコンを取得
                                 icon = utils.get_source_icon(sub_choice['source'])
-                                # 参照元ドキュメントのページ番号が取得できた場合にのみ、ページ番号を表示
+                                #ページ番号を表示
                                 if "page_number" in sub_choice:
                                     st.info(f"{sub_choice['source']}", icon=icon)
                                 else:
@@ -176,13 +174,13 @@ def display_search_llm_response(llm_response):
         # LLMからのレスポンス（辞書）の「context」属性の中の「0」に、最も関連性が高いドキュメント情報が入っている
         main_file_path = llm_response["context"][0].metadata["source"]
 
-        # 補足メッセージの表示（元のシンプルな表示に戻す）
+        # 補足メッセージの表示
         main_message = "入力内容に関する情報は、以下のファイルに含まれている可能性があります。"
         st.markdown(main_message)
 
     # 参照元のありかに応じて、適したアイコンを取得
     icon = utils.get_source_icon(main_file_path)
-    # ページ番号が取得できた場合のみ、ページ番号を表示（ドキュメントによっては取得できない場合がある）
+    # ページ番号を表示（ドキュメントによっては取得できない場合がある）
     if "page" in llm_response["context"][0].metadata:
         main_page_number = llm_response["context"][0].metadata["page"]
         # PDFの場合のみページ番号を表示

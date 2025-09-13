@@ -69,33 +69,63 @@ with st.sidebar:
         index=0,
         label_visibility="collapsed"
     )
-    # ラジオボタン下に余白を追加
-    st.markdown("<div style='height: 40px;'></div>", unsafe_allow_html=True)
+
+    # ラジオボタン下に区切り線と余白を追加
+    st.markdown("""
+        <hr style='border: none; border-top: 2px solid #e0e0e0; margin: 24px 0 24px 0;'>
+    """, unsafe_allow_html=True)
 
     # 選択肢に関わらず常時説明文を表示
     st.markdown(
         """
         <style>
         .sidebar-desc-box {
-            background-color: #e3f2fd;
-            color: #1565c0;
+            background-color: transparent;
+            color: #222;
             border-radius: 8px;
             padding: 14px 14px;
             margin-bottom: 8px;
             font-size: 1.05em;
+            border: none;
+        }
+        .sidebar-highlight {
+            background-color: #e3f2fd;
+            color: #1565c0;
+            border-radius: 8px;
+            font-size: 1.05em;
             border: 1px solid #90caf9;
+            display: block;
+        }
+        .sidebar-highlight-search {
+            padding: 16px 14px;
+            margin: 18px 0 22px 0;
+        }
+        .sidebar-highlight-inquiry {
+            padding: 6px 8px;
+            margin: 6px 0 10px 0;
+        }
+        .sidebar-example {
+            background-color: #fff;
+            color: #222;
+            border-radius: 8px;
+            padding: 10px 10px;
+            margin: 8px 0 16px 0;
+            font-size: 1.05em;
+            border: 1px solid #eee;
+            display: block;
         }
         </style>
         <div class="sidebar-desc-box">
-        <b>【「社内文書検索」を選択した場合】</b><br>
-        入力内容と関連性が高い社内文書のありかを検索できます。<br>
-        <b>【入力例】</b><br>
-        社員の育成方針に関するMTGの議事録
-        <br><br>
-        <b>【「社内問い合わせ」を選択した場合】</b><br>
-        質問・要望に対して、社内文書の情報をもとに回答を得られます。<br>
-        <b>【入力例】</b><br>
-        人事部に所属している従業員情報を一覧化して
+            <b>【「社内文書検索」を選択した場合】</b>
+            <div class="sidebar-highlight sidebar-highlight-search">入力内容と関連性が高い社内文書のありかを検索できます。</div>
+            <div class="sidebar-example"><b>【入力例】</b><br>
+            社員の育成方針に関するMTGの議事録</div>
+            <div style='height: 24px;'></div>
+            <b>【「社内問い合わせ」を選択した場合】</b><br>
+            <div style='height: 24px;'></div>
+            <div class="sidebar-highlight sidebar-highlight-inquiry">質問・要望に対して、社内文書の情報をもとに回答を得られます。</div>
+            <div class="sidebar-example"><b>【入力例】</b><br>
+            人事部に所属している従業員情報を一覧化して</div>
         </div>
         """,
         unsafe_allow_html=True

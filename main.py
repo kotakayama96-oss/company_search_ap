@@ -69,19 +69,37 @@ with st.sidebar:
         index=0,
         label_visibility="collapsed"
     )
+    # ラジオボタン下に余白を追加
+    st.markdown("<div style='height: 40px;'></div>", unsafe_allow_html=True)
 
     # 選択肢に関わらず常時説明文を表示
-    st.markdown("""
-    <b>【「社内文書検索」を選択した場合】</b><br>
-    入力内容と関連性が高い社内文書のありかを検索できます。<br>
-    <b>【入力例】</b><br>
-    社員の育成方針に関するMTGの議事録
-    <br><br>
-    <b>【「社内問い合わせ」を選択した場合】</b><br>
-    質問・要望に対して、社内文書の情報をもとに回答を得られます。<br>
-    <b>【入力例】</b><br>
-    人事部に所属している従業員情報を一覧化して
-    """, unsafe_allow_html=True)
+    st.markdown(
+        """
+        <style>
+        .sidebar-desc-box {
+            background-color: #e3f2fd;
+            color: #1565c0;
+            border-radius: 8px;
+            padding: 14px 14px;
+            margin-bottom: 8px;
+            font-size: 1.05em;
+            border: 1px solid #90caf9;
+        }
+        </style>
+        <div class="sidebar-desc-box">
+        <b>【「社内文書検索」を選択した場合】</b><br>
+        入力内容と関連性が高い社内文書のありかを検索できます。<br>
+        <b>【入力例】</b><br>
+        社員の育成方針に関するMTGの議事録
+        <br><br>
+        <b>【「社内問い合わせ」を選択した場合】</b><br>
+        質問・要望に対して、社内文書の情報をもとに回答を得られます。<br>
+        <b>【入力例】</b><br>
+        人事部に所属している従業員情報を一覧化して
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 # 右カラム: メイン画面（従来のチャットUI）
 right_col = st.container()
@@ -109,6 +127,8 @@ with right_col:
 ############################################################
 # 6. チャット入力の受け付け
 ############################################################
+    # チャット入力欄をページ最下部に寄せるための余白
+    st.markdown("<div style='height: 300px;'></div>", unsafe_allow_html=True)
     chat_message = st.chat_input(ct.CHAT_INPUT_HELPER_TEXT)
 
 

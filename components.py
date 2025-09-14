@@ -183,9 +183,9 @@ def display_search_llm_response(llm_response):
     # ページ番号を表示（ドキュメントによっては取得できない場合がある）
     if "page" in llm_response["context"][0].metadata:
         main_page_number = llm_response["context"][0].metadata["page"]
-        # PDFの場合のみページ番号を表示
+        # PDFの場合のみページ番号を「+1」して表示
         if main_file_path.lower().endswith('.pdf'):
-            st.success(f"{main_file_path}（ページNo.{main_page_number}）", icon=icon)
+            st.success(f"{main_file_path}（ページNo.{main_page_number + 1}）", icon=icon)
         else:
             st.success(f"{main_file_path}", icon=icon)
     else:
@@ -219,11 +219,11 @@ def display_search_llm_response(llm_response):
         # ページ番号が取得できない場合のための分岐処理
         if "page" in document.metadata:
             sub_page_number = document.metadata["page"]
-            # PDFの場合のみページ番号を付与
+            # PDFの場合のみページ番号を「+1」して付与
             if sub_file_path.lower().endswith('.pdf'):
-                sub_choice = {"source": f"{sub_file_path}（ページNo.{sub_page_number}）", "page_number": sub_page_number}
+                sub_choice = {"source": f"{sub_file_path}（ページNo.{sub_page_number + 1}）", "page_number": sub_page_number + 1}
             else:
-                sub_choice = {"source": sub_file_path, "page_number": sub_page_number}
+                sub_choice = {"source": sub_file_path, "page_number": sub_page_number + 1}
         else:
             sub_choice = {"source": sub_file_path}
         

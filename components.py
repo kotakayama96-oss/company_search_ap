@@ -166,17 +166,35 @@ def display_search_llm_response(llm_response):
         LLMからの回答を画面表示用に整形した辞書データ
     """
     # LLMからのレスポンスに参照元情報が入っており、かつ「該当資料なし」が回答として返された場合
-    if llm_response["context"] and llm_response["answer"] != ct.NO_DOC_MATCH_ANSWER:
 
-        # ==========================================
-        # ユーザー入力値と最も関連性が高いメインドキュメントのありかを表示
-        # ==========================================
-        # LLMからのレスポンス（辞書）の「context」属性の中の「0」に、最も関連性が高いドキュメント情報が入っている
+    # contextが空、または0番目にアクセスできない場合はエラーを出さずにメッセージ表示
+    if (
+        not llm_response.get("context")
+        or not isinstance(llm_response["context"], list)
+        or len(llm_response["context"]) == 0
+        or llm_response["answer"] == ct.NO_DOC_MATCH_ANSWER
+    ):
+        st.markdown(ct.NO_DOC_MATCH_MESSAGE)
+        content = {}
+        content["mode"] = ct.ANSWER_MODE_1
+        content["answer"] = ct.NO_DOC_MATCH_MESSAGE
+        content["no_file_path_flg"] = True
+        return content
+
+    # ここから下はcontextが正常な場合のみ
+    try:
         main_file_path = llm_response["context"][0].metadata["source"]
+    except (KeyError, IndexError, AttributeError):
+        st.markdown(ct.NO_DOC_MATCH_MESSAGE)
+        content = {}
+        content["mode"] = ct.ANSWER_MODE_1
+        content["answer"] = ct.NO_DOC_MATCH_MESSAGE
+        content["no_file_path_flg"] = True
+        return content
 
-        # 補足メッセージの表示
-        main_message = "入力内容に関する情報は、以下のファイルに含まれている可能性があります。"
-        st.markdown(main_message)
+    # 補足メッセージの表示
+    main_message = "入力内容に関する情報は、以下のファイルに含まれている可能性があります。"
+    st.markdown(main_message)
 
     # 参照元のありかに応じて、適したアイコンを取得
     icon = utils.get_source_icon(main_file_path)
@@ -321,9 +339,9 @@ def display_contact_llm_response(llm_response):
 
             if "page" in document.metadata:
                 page_number = document.metadata["page"]
-                # PDFの場合のみページ番号を付与
+                # PDFの場合のみページ番号を「+1」して表示
                 if file_path.lower().endswith('.pdf'):
-                    file_info = f"{file_path}（ページNo.{page_number}）"
+                    file_info = f"{file_path}（ページNo.{page_number + 1}）"
                 else:
                     file_info = f"{file_path}"
             else:
